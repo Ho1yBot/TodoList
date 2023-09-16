@@ -51,3 +51,20 @@ li {
 li:last-child {
     border-bottom: none;
 }
+
+.highlight-even{
+    color: red;
+}
+
+.highlight-odd{
+    color: blue;
+}
+
+.completed{
+    background-color: green; 
+}
+
+.check-icon{
+    width: 50px;
+
+}

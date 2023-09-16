@@ -7,35 +7,70 @@ document.addEventListener("DOMContentLoaded", function () {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     // Загрузка задач из localStorage
-    for (const taskText of storedTasks) {
-        createTaskElement(taskText);
+    for (const taskData of storedTasks) {
+        createTaskElement(taskData);
     }
 
-    function createTaskElement(taskText) {
+    function createTaskElement(taskData) {
         const li = document.createElement("li");
         li.innerHTML = `
-            <span>${taskText}</span>
+            <span>${taskData.text}</span>
             <button class="delete">Удалить</button>
+            <button class="complete">${taskData.completed ? '<img src="check.svg" alt="Галочка" class="check-icon">' : 'Complete'}</button>
         `;
+
+        if (taskData.completed) {
+            li.classList.add("completed");
+            // Переместить завершенные задачи в конец списка
+            taskList.appendChild(li);
+        } else {
+            // Добавить новые задачи в начало списка
+            taskList.prepend(li);
+        }
 
         li.querySelector(".delete").addEventListener("click", function () {
             li.remove();
             updateLocalStorage();
         });
 
-        taskList.appendChild(li);
+        li.querySelector(".complete").addEventListener("click", function () {
+            if (!taskData.completed) {
+                taskData.completed = true;
+                li.classList.add("completed");
+                li.querySelector(".complete").innerHTML = `<img src="check.svg" alt="Галочка" class="check-icon">`;
+                // Переместить завершенные задачи в конец списка
+                taskList.appendChild(li);
+            } else {
+                taskData.completed = false;
+                li.classList.remove("completed");
+                li.querySelector(".complete").textContent = "Complete";
+                // Переместить незавершенные задачи в начало списка
+                taskList.prepend(li);
+            }
+            updateLocalStorage();
+        });
     }
 
     function updateLocalStorage() {
-        const tasks = Array.from(taskList.querySelectorAll("li span")).map(span => span.textContent);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+        const tasksData = [];
+        const taskElements = taskList.querySelectorAll("li");
+
+        taskElements.forEach((element) => {
+            const taskData = {
+                text: element.querySelector("span").textContent,
+                completed: element.classList.contains("completed"),
+            };
+            tasksData.push(taskData);
+        });
+
+        localStorage.setItem("tasks", JSON.stringify(tasksData));
     }
 
     addTaskButton.addEventListener("click", function () {
         const taskText = taskInput.value.trim();
 
         if (taskText !== "") {
-            createTaskElement(taskText);
+            createTaskElement({ text: taskText, completed: false });
             updateLocalStorage();
             taskInput.value = "";
         }
@@ -47,31 +82,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Добавить кнопку, которая выделяет (цветом или эффектом) каждый чётный элемент
+
+    // Добавить кнопку, которая выделяет каждый чётный элемент и убирает выделение при его наличии
     const highlightEvenButton = document.createElement("button");
     highlightEvenButton.textContent = "Выделить чётные";
     highlightEvenButton.addEventListener("click", function () {
         const items = taskList.querySelectorAll("li");
         items.forEach((item, index) => {
             if (index % 2 === 1) {
-                item.classList.add("highlight-even");
-            } else {
-                item.classList.remove("highlight-even");
+                if (item.classList.contains("highlight-even")) {
+                    item.classList.remove("highlight-even");
+                } else {
+                    item.classList.add("highlight-even");
+                }
             }
         });
     });
     document.body.appendChild(highlightEvenButton);
 
-    // Добавить кнопку, которая выделяет (цветом или эффектом) каждый нечётный элемент
+    // Добавить кнопку, которая выделяет каждый нечётный элемент и убирает выделение при его наличии
     const highlightOddButton = document.createElement("button");
     highlightOddButton.textContent = "Выделить нечётные";
     highlightOddButton.addEventListener("click", function () {
         const items = taskList.querySelectorAll("li");
         items.forEach((item, index) => {
             if (index % 2 === 0) {
-                item.classList.add("highlight-odd");
-            } else {
-                item.classList.remove("highlight-odd");
+                if (item.classList.contains("highlight-odd")) {
+                    item.classList.remove("highlight-odd");
+                } else {
+                    item.classList.add("highlight-odd");
+                }
             }
         });
     });
