@@ -1,3 +1,9 @@
+.center{
+    max-width: 600px;
+    width: 100%;
+    margin: 0px auto;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -38,6 +44,10 @@ button {
 ul {
     list-style: none;
     padding: 0;
+}
+
+.taskList{
+    /* display: flex; */
 }
 
 li {

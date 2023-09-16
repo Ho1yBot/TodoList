@@ -7,9 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     // Загрузка задач из localStorage
-    for (const taskData of storedTasks) {
-        createTaskElement(taskData);
+    for (const taskData of storedTasks.reverse()) { // reverse() изменяет порядок на обратный
+    createTaskElement(taskData);
     }
+
 
     function createTaskElement(taskData) {
         const li = document.createElement("li");
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!taskData.completed) {
                 taskData.completed = true;
                 li.classList.add("completed");
-                li.querySelector(".complete").innerHTML = `<img src="check.svg" alt="Галочка" class="check-icon">`;
+                li.querySelector(".complete").innerHTML = `<img src="img/check.svg" alt="Галочка" class="check-icon">`;
                 // Переместить завершенные задачи в конец списка
                 taskList.appendChild(li);
             } else {
@@ -141,18 +142,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.body.appendChild(removeFirstButton);
 
-    // Добавить кнопку Complete, которая помечает элемент завершенным и помещает в конец списка
-    const completeAndMoveButton = document.createElement("button");
-    completeAndMoveButton.textContent = "Complete и переместить";
-    completeAndMoveButton.addEventListener("click", function () {
-        const items = taskList.querySelectorAll("li");
-        if (items.length > 0) {
-            const firstItem = items[0];
-            taskList.removeChild(firstItem);
-            firstItem.classList.add("completed");
-            taskList.appendChild(firstItem);
-            updateLocalStorage();
-        }
-    });
-    document.body.appendChild(completeAndMoveButton);
+    // // Добавить кнопку Complete, которая помечает элемент завершенным и помещает в конец списка
+    // const completeAndMoveButton = document.createElement("button");
+    // completeAndMoveButton.textContent = "Complete и переместить";
+    // completeAndMoveButton.addEventListener("click", function () {
+    //     const items = taskList.querySelectorAll("li");
+    //     if (items.length > 0) {
+    //         const firstItem = items[0];
+    //         taskList.removeChild(firstItem);
+    //         firstItem.classList.add("completed");
+    //         taskList.appendChild(firstItem);
+    //         updateLocalStorage();
+    //     }
+    // });
+    // document.body.appendChild(completeAndMoveButton);
 });
