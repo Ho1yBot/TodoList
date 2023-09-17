@@ -8,16 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Загрузка задач из localStorage
     for (const taskData of storedTasks.reverse()) { // reverse() изменяет порядок на обратный
-    createTaskElement(taskData);
+        createTaskElement(taskData);
     }
-
 
     function createTaskElement(taskData) {
         const li = document.createElement("li");
         li.innerHTML = `
-            <span>${taskData.text}</span>
-            <button class="delete">Удалить</button>
-            <button class="complete">${taskData.completed ? '<img src="check.svg" alt="Галочка" class="check-icon">' : 'Complete'}</button>
+            <span class="textOfTask">${taskData.text}</span>
+            <div class="btnDelComp">
+                <button class="delete">Удалить</button>
+                <button class="complete">${taskData.completed ? '<img src="img/check.png" alt="Галочка" class="check-icon">' : 'Complete'}</button>
+            </div>
+            
         `;
 
         if (taskData.completed) {
@@ -34,17 +36,18 @@ document.addEventListener("DOMContentLoaded", function () {
             updateLocalStorage();
         });
 
-        li.querySelector(".complete").addEventListener("click", function () {
+        const completeButton = li.querySelector(".complete");
+        completeButton.addEventListener("click", function () {
             if (!taskData.completed) {
                 taskData.completed = true;
                 li.classList.add("completed");
-                li.querySelector(".complete").innerHTML = `<img src="img/check.svg" alt="Галочка" class="check-icon">`;
+                completeButton.innerHTML = `<img src="img/check.png" alt="Галочка" class="check-icon">`;
                 // Переместить завершенные задачи в конец списка
                 taskList.appendChild(li);
             } else {
                 taskData.completed = false;
                 li.classList.remove("completed");
-                li.querySelector(".complete").textContent = "Complete";
+                completeButton.textContent = "Complete";
                 // Переместить незавершенные задачи в начало списка
                 taskList.prepend(li);
             }
@@ -83,10 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
     // Добавить кнопку, которая выделяет каждый чётный элемент и убирает выделение при его наличии
-    const highlightEvenButton = document.createElement("button");
-    highlightEvenButton.textContent = "Выделить чётные";
+    const highlightEvenButton = document.querySelector(".highlightEven");
     highlightEvenButton.addEventListener("click", function () {
         const items = taskList.querySelectorAll("li");
         items.forEach((item, index) => {
@@ -99,11 +100,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    document.body.appendChild(highlightEvenButton);
 
     // Добавить кнопку, которая выделяет каждый нечётный элемент и убирает выделение при его наличии
-    const highlightOddButton = document.createElement("button");
-    highlightOddButton.textContent = "Выделить нечётные";
+    const highlightOddButton = document.querySelector(".highlightOdd");
     highlightOddButton.addEventListener("click", function () {
         const items = taskList.querySelectorAll("li");
         items.forEach((item, index) => {
@@ -116,11 +115,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    document.body.appendChild(highlightOddButton);
 
     // Добавить кнопку, которая удаляет последний элемент
-    const removeLastButton = document.createElement("button");
-    removeLastButton.textContent = "Удалить последний";
+    const removeLastButton = document.querySelector(".removeLast");
     removeLastButton.addEventListener("click", function () {
         const items = taskList.querySelectorAll("li");
         if (items.length > 0) {
@@ -128,11 +125,9 @@ document.addEventListener("DOMContentLoaded", function () {
             updateLocalStorage();
         }
     });
-    document.body.appendChild(removeLastButton);
 
     // Добавить кнопку, которая удаляет первый элемент
-    const removeFirstButton = document.createElement("button");
-    removeFirstButton.textContent = "Удалить первый";
+    const removeFirstButton = document.querySelector(".removeFirst");
     removeFirstButton.addEventListener("click", function () {
         const items = taskList.querySelectorAll("li");
         if (items.length > 0) {
@@ -140,20 +135,4 @@ document.addEventListener("DOMContentLoaded", function () {
             updateLocalStorage();
         }
     });
-    document.body.appendChild(removeFirstButton);
-
-    // // Добавить кнопку Complete, которая помечает элемент завершенным и помещает в конец списка
-    // const completeAndMoveButton = document.createElement("button");
-    // completeAndMoveButton.textContent = "Complete и переместить";
-    // completeAndMoveButton.addEventListener("click", function () {
-    //     const items = taskList.querySelectorAll("li");
-    //     if (items.length > 0) {
-    //         const firstItem = items[0];
-    //         taskList.removeChild(firstItem);
-    //         firstItem.classList.add("completed");
-    //         taskList.appendChild(firstItem);
-    //         updateLocalStorage();
-    //     }
-    // });
-    // document.body.appendChild(completeAndMoveButton);
 });

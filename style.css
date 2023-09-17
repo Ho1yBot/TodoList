@@ -1,3 +1,12 @@
+*{
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-stretch: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .center{
     max-width: 600px;
     width: 100%;
@@ -5,10 +14,12 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+    background-image: url(https://edu.rosatom.ru/local/templates/edu/img/6.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin-top: 10px 
 }
 
 .container {
@@ -20,25 +31,31 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+.title-head{
+    font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
 }
 
 input[type="text"] {
-    width: 80%;
+    width: 78%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #007BFF;
+    padding: 6px 12px;
+    background-color: rgb(60, 136, 190);
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    max-width: 146px;
+}
+
+.addTask{
+    padding: 11px 20px;
 }
 
 ul {
@@ -47,6 +64,7 @@ ul {
 }
 
 .taskList{
+    padding-right: 4px;
     /* display: flex; */
 }
 
@@ -54,8 +72,22 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 10px 10px 10px;
     border-bottom: 1px solid #ccc;
+}
+
+.textOfTask{
+    max-width: 370px;
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-all;
+    margin-left: 10px;
+}
+
+.btnDelComp{
+    display: flex;
+    align-items: center;
+    gap: 3px;
 }
 
 li:last-child {
@@ -63,18 +95,40 @@ li:last-child {
 }
 
 .highlight-even{
-    color: red;
+    background-color: rgba(231,238,115, 0.6);
 }
 
 .highlight-odd{
-    color: blue;
+    background-color: rgba(132,200,187, 0.3);
+}
+
+
+.check-icon{
+    width: 20px;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ .highlightEven, .highlightOdd, .removeLast, .removeFirst{
+    height: 54px;
+    margin-top: 10px;
+}
+
+.complete{
+    width: 82px;
+    height: 31px;
 }
 
 .completed{
-    background-color: green; 
+    background-color: rgb(177,197,65); 
+    
 }
 
-.check-icon{
-    width: 50px;
-
+.completed > .textOfTask{
+   
+    text-decoration: line-through;
 }
