@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createTaskElement(taskData) {
         const li = document.createElement("li");
+        li.classList.add("taskElementBlock");
         li.innerHTML = `
             <span class="textOfTask">${taskData.text}</span>
             <div class="btnDelComp">
