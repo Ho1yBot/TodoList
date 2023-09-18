@@ -37,7 +37,7 @@ body {
     margin-bottom: 5px;
 }
 
-.title-head{
+.titleHead{
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;
@@ -71,7 +71,6 @@ ul {
 
 .taskList{
     padding-right: 4px;
-    /* display: flex; */
 }
 
 .taskElementBlock {
@@ -96,7 +95,7 @@ ul {
     gap: 3px;
 }
 
-li:last-child {
+.taskElementBlock:last-child {
     border-bottom: none;
 }
 
@@ -144,10 +143,6 @@ li:last-child {
     justify-content: space-between;
     border-bottom: 1px solid #ccc;
     align-items: center;
-}
-
-.infoItemLogo{
-
 }
 
 .infoItemMe{
